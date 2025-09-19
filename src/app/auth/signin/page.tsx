@@ -16,11 +16,20 @@ export default function SignInPage() {
     });
   }, []);
 
+  useEffect(() => {
+    if (session) {
+      // Try to get callbackUrl from query params
+      const params = new URLSearchParams(window.location.search);
+      const callbackUrl = "http://localhost:8080/mfe/"; // Default to shell app
+      window.location.href = callbackUrl;
+    }
+  }, [session]);
+
   if (loading) {
     return <div><h1>Checking authentication...</h1></div>;
   }
   if (session) {
-    return <div><h1>Login successful!</h1></div>;
+    return <div><h1>Login successful! Redirecting...</h1></div>;
   }
   return <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 100 }}><h1>Redirecting to ForgeRock login...</h1></div>;
 }

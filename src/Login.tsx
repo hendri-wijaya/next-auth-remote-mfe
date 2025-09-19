@@ -1,18 +1,10 @@
 import React, { useEffect } from "react";
 
-type LoginProps = {
-  onSuccess?: () => void;
-};
-
-const Login: React.FC<LoginProps> = ({ onSuccess }) => {
-
+const Login = () => {
   useEffect(() => {
-  // notify shell, but still redirect
-  if (onSuccess) {
-    onSuccess();
-  }
-  window.location.href = `http://localhost:3000/api/auth/signin/forgerock`;
-}, []);
+    // Redirect to NextAuth with callbackUrl set to shell app
+    window.location.href = "http://localhost:3000/api/auth/signin/forgerock?callbackUrl=http://localhost:8080/mfe/";
+  }, []);
 
   return (
     <div>
