@@ -5,16 +5,14 @@ type LoginProps = {
 };
 
 const Login: React.FC<LoginProps> = ({ onSuccess }) => {
-  const AUTH_BASE_URL = process.env.NEXTAUTH_URL ?? "http://localhost:3000";
 
   useEffect(() => {
-    // call the callback instead of redirecting directly
-    if (onSuccess) {
-      onSuccess();
-    } else {
-      window.location.href = `${AUTH_BASE_URL}/api/auth/signin/forgerock`;
-    }
-  }, [onSuccess, AUTH_BASE_URL]);
+  // notify shell, but still redirect
+  if (onSuccess) {
+    onSuccess();
+  }
+  window.location.href = `http://localhost:3000/api/auth/signin/forgerock`;
+}, []);
 
   return (
     <div>
