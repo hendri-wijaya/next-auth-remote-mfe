@@ -20,7 +20,7 @@ export default function SignInPage() {
     if (session) {
       // Try to get callbackUrl from query params
       const params = new URLSearchParams(window.location.search);
-      const callbackUrl = "http://localhost:8080/mfe/"; // Default to shell app
+      const callbackUrl = "http://localhost:8080/mfe/?isLoggedIn=true&target=homepage"; // Default to shell app
       window.location.href = callbackUrl;
     }
   }, [session]);
