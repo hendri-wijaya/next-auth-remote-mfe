@@ -11,7 +11,7 @@ export default function SignInPage() {
       setSession(sess);
       setLoading(false);
       if (!sess) {
-        signIn("forgerock");
+        signIn("okta");
       }
     });
   }, []);
@@ -31,5 +31,5 @@ export default function SignInPage() {
   if (session) {
     return <div><h1>Login successful! Redirecting...</h1></div>;
   }
-  return <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 100 }}><h1>Redirecting to ForgeRock login...</h1></div>;
+  return <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 100 }}><h1>Redirecting to Okta login...</h1></div>;
 }

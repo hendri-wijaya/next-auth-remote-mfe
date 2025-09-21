@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import Auth0Provider from "next-auth/providers/auth0";
+import OktaProvider from "next-auth/providers/okta";
 
 export const authOptions = {
   providers: [
@@ -18,36 +18,15 @@ export const authOptions = {
         return null;
       },
     }),
-    Auth0Provider({
-      id: "forgerock",
-      name: "ForgeRock",
-      issuer: "http://identity-platform.domain.local/am/oauth2",
-      clientId: process.env.FORGEROCK_CLIENT_ID ?? "",
-      clientSecret: process.env.FORGEROCK_CLIENT_SECRET ?? "",
+    OktaProvider({
+      clientId: process.env.OKTA_CLIENT_ID!,
+      clientSecret: process.env.OKTA_CLIENT_SECRET!,
+      issuer: "https://integrator-9547141.okta.com/oauth2/default",
       authorization: {
-        url: "http://identity-platform.domain.local/am/oauth2/authorize",
         params: {
-          response_type: "code",
-          client_id: process.env.FORGEROCK_CLIENT_ID ?? "",
-          redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/forgerock`,
           scope: "openid profile email",
-          state: "xyz123",
+          idp: process.env.OKTA_FEDERATED_IDP!, // 👈 forces federation to ForgeRock
         },
-      },
-      token: {
-        url: "http://identity-platform.domain.local/am/oauth2/access_token?realm=/",
-        params: {
-          grant_type: "authorization_code",
-        },
-      },
-      userinfo: "http://identity-platform.domain.local/am/oauth2/userinfo?realm=/",
-      profile(profile: any) {
-        return {
-          id: profile.sub,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-        };
       },
     }),
   ],
